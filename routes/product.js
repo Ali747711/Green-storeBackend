@@ -7,7 +7,7 @@ const router = express.Router()
 
 router.post('/add', upload.array(["images"]), authSeller, addProduct)
 router.get('/list', productList)
-router.get('/id', productById)
+router.get('/:id', productById)
 router.post('/stock', authSeller, changeStock)
 
 
