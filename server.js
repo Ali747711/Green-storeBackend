@@ -16,7 +16,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Allow multiple origins
-const allowedOrigins = ["http://localhost:5173", "https://green-store-j5kv.vercel.app/", "https://green-store-j5kv-l1pacpdcz-alis-projects-1ef90113.vercel.app/", "https://green-store-j5kv-git-main-alis-projects-1ef90113.vercel.app/"];
+const allowedOrigins = ["https://green-store-j5kv.vercel.app", "https://green-store-j5kv-l1pacpdcz-alis-projects-1ef90113.vercel.app", "https://green-store-j5kv-git-main-alis-projects-1ef90113.vercel.app"];
 
 app.post("/stripe", express.raw({ type: "application/json" }), stripeWebhooks);
 
@@ -27,17 +27,18 @@ app.use(cookieParser());
 app.use(
   cors({
     origin: function (origin, callback) {
-      // Allow requests with no origin (like mobile apps or curl requests)
+      // Allow requests with no origin (like mobile apps, Postman, or curl)
       if (!origin) return callback(null, true);
 
       if (allowedOrigins.indexOf(origin) === -1) {
-        const msg =
-          "The CORS policy for this site does not allow access from the specified Origin.";
+        const msg = `The CORS policy for this site does not allow access from the specified Origin: ${origin}`;
         return callback(new Error(msg), false);
       }
       return callback(null, true);
     },
-    credentials: true,
+    credentials: true, // Allow cookies and credentials
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
