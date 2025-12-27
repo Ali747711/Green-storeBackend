@@ -8,9 +8,7 @@ import Address from "../models/address.js";
 export const placeOrderCOD = async (req, res) => {
   try {
     const { userId, items, address } = req.body;
-    console.log("userId: ", userId);
-    console.log("Items: ", items);
-    console.log("address", address);
+
     if (!address || items.length === 0) {
       return res.json({ success: false, message: "Invalid data" });
     }
