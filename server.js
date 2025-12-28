@@ -24,19 +24,36 @@ app.post("/stripe", express.raw({ type: "application/json" }), stripeWebhooks);
 
 app.use(express.json());
 app.use(cookieParser());
+// 🔍 CORS with detailed logging
 app.use(
   cors({
     origin: function (origin, callback) {
+      // ✅ Log every request for debugging
+      console.log("=================================");
+      console.log("📨 Incoming request from origin:", origin || "NO ORIGIN");
+      console.log("✅ Allowed origins:", allowedOrigins);
+      
       // Allow requests with no origin (like mobile apps, Postman, or curl)
-      if (!origin) return callback(null, true);
+      if (!origin) {
+        console.log("✅ ALLOWED: No origin (Postman/curl/mobile)");
+        return callback(null, true);
+      }
 
       if (allowedOrigins.indexOf(origin) === -1) {
+        console.log("❌ BLOCKED: Origin not in allowed list");
+        console.log("❌ Blocked origin:", origin);
+        console.log("❌ Did you mean one of these?");
+        allowedOrigins.forEach(allowed => {
+          console.log(`   - ${allowed}`);
+        });
         const msg = `The CORS policy for this site does not allow access from the specified Origin: ${origin}`;
         return callback(new Error(msg), false);
       }
+      
+      console.log("✅ ALLOWED: Origin matches");
       return callback(null, true);
     },
-    credentials: true, // Allow cookies and credentials
+    credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
