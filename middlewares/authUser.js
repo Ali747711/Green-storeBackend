@@ -3,11 +3,11 @@ import User from '../models/user.js'
 
 const authUser = async(req, res, next) => {
     // 🔍 DEBUG: Log everything
-    console.log('=== AUTH USER DEBUG ===')
-    console.log('All cookies:', req.cookies)
-    console.log('Token cookie:', req.cookies.token)
-    console.log('Headers:', req.headers.cookie)
-    console.log('=====================')
+    // console.log('=== AUTH USER DEBUG ===')
+    // console.log('All cookies:', req.cookies)
+    // console.log('Token cookie:', req.cookies.token)
+    // console.log('Headers:', req.headers.cookie)
+    // console.log('=====================')
     
     // const {token} = req.cookies
     // ✅ Check BOTH Authorization header AND cookie
@@ -17,13 +17,13 @@ const authUser = async(req, res, next) => {
     const authHeader = req.headers.authorization
     if (authHeader && authHeader.startsWith('Bearer ')) {
         token = authHeader.substring(7)
-        console.log('✅ Token from Authorization header: ', token)
+        // console.log('✅ Token from Authorization header: ', token)
     }
     
     // 2. Check cookie (for desktop)
     if (!token && req.cookies.token) {
         token = req.cookies.token
-        console.log('✅ Token from cookie')
+        // console.log('✅ Token from cookie')
     }
     
     
@@ -33,11 +33,11 @@ const authUser = async(req, res, next) => {
 
     try {
         const tokenDecode = jwt.verify(token, process.env.JWT_SECRET)
-        console.log('✅ Token decoded:', tokenDecode)
+        // console.log('✅ Token decoded:', tokenDecode)
         
         if(tokenDecode.id){
             req.user = {id: tokenDecode.id}
-            console.log('✅ User authenticated:', req.user)
+            // console.log('✅ User authenticated:', req.user)
             next()
         }else{
             console.log('❌ No user ID in token')
