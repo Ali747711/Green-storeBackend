@@ -22,6 +22,7 @@ export const sellerLogin = async (req, res) => {
       return res.json({
         success: true,
         message: "Seller logged in Successfully!",
+        token
       });
     } else {
       return res.json({
