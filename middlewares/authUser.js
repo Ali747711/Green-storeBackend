@@ -9,7 +9,23 @@ const authUser = async(req, res, next) => {
     console.log('Headers:', req.headers.cookie)
     console.log('=====================')
     
-    const {token} = req.cookies
+    // const {token} = req.cookies
+    // ✅ Check BOTH Authorization header AND cookie
+    let token = null
+    
+    // 1. Check Authorization header (for mobile)
+    const authHeader = req.headers.authorization
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+        token = authHeader.substring(7)
+        console.log('✅ Token from Authorization header')
+    }
+    
+    // 2. Check cookie (for desktop)
+    if (!token && req.cookies.token) {
+        token = req.cookies.token
+        console.log('✅ Token from cookie')
+    }
+    
     
     if(!token){
         return res.json({success: false, message: 'Not authorized! No token found'})
