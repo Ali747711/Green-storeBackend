@@ -17,7 +17,7 @@ const authSeller = async(req, res, next) => {
     }
 
 
-    if(!sellerToken){
+    if(!token){
         return res.json({success: false, message: 'Not authorized!'})
     }
 
