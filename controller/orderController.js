@@ -221,7 +221,7 @@ export const getAllOrders = async (req, res) => {
     //     }
     // }])
 
-    console.log("Orders: ", orders);
+    // console.log("Orders: ", orders);
     res.json({ success: true, orders });
   } catch (error) {
     res.json({
