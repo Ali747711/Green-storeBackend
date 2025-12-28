@@ -17,7 +17,7 @@ const authUser = async(req, res, next) => {
     const authHeader = req.headers.authorization
     if (authHeader && authHeader.startsWith('Bearer ')) {
         token = authHeader.substring(7)
-        console.log('✅ Token from Authorization header')
+        console.log('✅ Token from Authorization header: ', token)
     }
     
     // 2. Check cookie (for desktop)
