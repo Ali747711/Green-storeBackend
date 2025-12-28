@@ -24,7 +24,7 @@ export const register = async (req, res) => {
       expiresIn: "7d",
     });
 
-    console.log("Token created in Login", token)
+    // console.log("Token created in Login", token)
     res.cookie("token", token, {
       httpOnly: true,
       secure: true, // Use secure cookies in production
@@ -103,7 +103,7 @@ export const isAuth = async (req, res) => {
   try {
     const id = req.user.id;
     const user = await User.findById(id).select("-password");
-    console.log(user, "userController");
+    // console.log(user, "userController");
     return res.json({ success: true, user });
   } catch (error) {
     console.log(error.message);
