@@ -16,7 +16,7 @@ export const sellerLogin = async (req, res) => {
       res.cookie("sellerToken", token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production", // Use secure cookies in production
-        sameSite: none, // CSRF protection
+        sameSite: "none", // CSRF protection
         maxAge: 7 * 24 * 60 * 1000, // cookie expiration time
       });
       return res.json({
@@ -58,7 +58,7 @@ export const sellerLogout = async (req, res) => {
     res.clearCookie("sellerToken", {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: none,
+      sameSite: "none",
     });
 
     return res.json({
